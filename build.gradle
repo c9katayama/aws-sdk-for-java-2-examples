@@ -1,0 +1,27 @@
+plugins {
+    id "java"
+    id "eclipse"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // BOMの追加（AWS SDK for Java 2.x用）
+    implementation platform("software.amazon.awssdk:bom:2.20.0")
+    // BOMを追加した上で必要なサービスを依存関係として列挙
+    implementation("software.amazon.awssdk:sts")//Security Tokenを使うためのモジュール。ほぼ必須
+    implementation("software.amazon.awssdk:s3")//Amazon S3
+    implementation("software.amazon.awssdk:ec2")//Amazon E
+    implementation("software.amazon.awssdk:costexplorer")//AWSコスト
+    
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+}
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
